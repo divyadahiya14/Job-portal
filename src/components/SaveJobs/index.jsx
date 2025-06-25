@@ -93,16 +93,9 @@ const SaveJobs = () => {
                 );
               })
             ) : (
-              <div style={{ 
-                textAlign: 'center', 
-                padding: '40px 20px',
-                backgroundColor: '#fff',
-                borderRadius: '8px',
-                margin: '20px',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-              }}>
-                <h3 style={{ color: '#666', marginBottom: '10px' }}>No saved jobs yet</h3>
-                <p style={{ color: '#999' }}>
+              <div className="no-saved-jobs">
+                <h3>No saved jobs yet</h3>
+                <p>
                   Jobs you save will appear here. Start browsing and save jobs you're interested in!
                 </p>
               </div>
