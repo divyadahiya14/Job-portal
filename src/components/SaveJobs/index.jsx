@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import "./index.css";
 
 const SaveJobs = () => {
@@ -67,9 +68,9 @@ const SaveJobs = () => {
                       </div>
                       <div className="job-button">
                         <div className="job-posting">
-                          <a href="#" style={{ textDecoration: 'none', color: 'white' }}>
+                          <Link to="/apply-jobs" style={{ textDecoration: 'none', color: 'white' }}>
                             Apply Now
-                          </a>
+                          </Link>
                         </div>
                         <div className="save-button">
                           <button
