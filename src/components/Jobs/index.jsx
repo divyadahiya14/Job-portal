@@ -14,14 +14,20 @@ const experience = [
 ];
 
 const Jobs = () => {
-  const [filteredJobs, setFilteredJobs] = useState([...Job]);
-  const [searchterm, setSearchTerm] = useState("");
+  const [jobData, setJobData] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
   const [savedJobs, setSavedJobs] = useState([]);
 
-  // Load saved jobs from localStorage on component mount
+  // Load job data and saved jobs from localStorage on component mount
   useEffect(() => {
     console.log("Jobs component mounted");
     console.log("Initial Job data:", Job);
+    
+    // Set the job data
+    setJobData([...Job]);
+    setFilteredJobs([...Job]);
+    
+    // Load saved jobs
     const savedJobsData = localStorage.getItem("savedJobs");
     if (savedJobsData) {
       setSavedJobs(JSON.parse(savedJobsData));
@@ -33,36 +39,48 @@ const Jobs = () => {
     event.preventDefault();
     console.log("Filtering by role:", value);
     setFilteredJobs(
-      Job.filter((job) => {
+      jobData.filter((job) => {
         return job.role === value;
       })
     );
   }
 
   function saveClick(jobData) {
-    console.log("Saving job:", jobData);
+    console.log("=== SAVE CLICK DEBUG ===");
+    console.log("Job data to save:", jobData);
+    console.log("Current saved jobs before:", savedJobs);
+    
     const updatedSavedJobs = [...savedJobs];
     const jobIndex = updatedSavedJobs.findIndex(job => job.id === jobData.id);
+    
+    console.log("Job index found:", jobIndex);
     
     if (jobIndex === -1) {
       // Add job to saved jobs
       updatedSavedJobs.push(jobData);
+      console.log("✅ Added job to saved jobs");
     } else {
       // Remove job from saved jobs
       updatedSavedJobs.splice(jobIndex, 1);
+      console.log("❌ Removed job from saved jobs");
     }
     
+    console.log("Updated saved jobs:", updatedSavedJobs);
     setSavedJobs(updatedSavedJobs);
     localStorage.setItem("savedJobs", JSON.stringify(updatedSavedJobs));
+    
+    // Verify localStorage was updated
+    const storedJobs = localStorage.getItem("savedJobs");
+    console.log("Stored in localStorage:", storedJobs);
+    console.log("=== END DEBUG ===");
   }
 
   const searchEvent = (event) => {
     const data = event.target.value;
-    setSearchTerm(data);
     console.log("Searching for:", data);
     
     if (data.length > 0) {
-      const filterData = Job.filter((item) => {
+      const filterData = jobData.filter((item) => {
         if (item) {
           return Object.values(item)
             .join("")
@@ -73,7 +91,7 @@ const Jobs = () => {
       });
       setFilteredJobs(filterData);
     } else {
-      setFilteredJobs([...Job]);
+      setFilteredJobs([...jobData]);
     }
   };
 
@@ -85,7 +103,7 @@ const Jobs = () => {
     checkedState.forEach((item, index) => {
       if (item === true) {
         hasActiveFilters = true;
-        const filterS = Job.filter((job) => {
+        const filterS = jobData.filter((job) => {
           if (index === 3) {
             // 5+ years
             return job.experience >= 5;
@@ -107,12 +125,14 @@ const Jobs = () => {
       );
       setFilteredJobs(uniqueFilters);
     } else {
-      setFilteredJobs([...Job]);
+      setFilteredJobs([...jobData]);
     }
   }
 
   const isJobSaved = (jobId) => {
-    return savedJobs.some(job => job.id === jobId);
+    const saved = savedJobs.some(job => job.id === jobId);
+    console.log(`Job ${jobId} saved status:`, saved, "Total saved jobs:", savedJobs.length);
+    return saved;
   };
 
   console.log("Current filtered jobs:", filteredJobs.length);
@@ -153,6 +173,7 @@ const Jobs = () => {
                             <div className="category">
                               <p>{location}</p>
                               <p>{role}</p>
+                              {posted && <p>Posted: {posted}</p>}
                             </div>
                           </div>
                         </div>
