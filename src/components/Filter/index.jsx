@@ -25,6 +25,17 @@ const Filter = ({
     setCheckedState(updatedCheckedState);
     handleExperienceFilter(updatedCheckedState);
   };
+
+  const resetFilters = () => {
+    setCheckedState(new Array(experience.length).fill(false));
+    handleExperienceFilter(new Array(experience.length).fill(false));
+    // Clear search input
+    const searchInput = document.querySelector('.search-term');
+    if (searchInput) {
+      searchInput.value = '';
+    }
+  };
+
   return (
     <>
       <div className="filter-page">
@@ -39,6 +50,20 @@ const Filter = ({
                 onChange={searchEvent}
               />
             </div>
+            <button 
+              onClick={resetFilters}
+              style={{
+                marginTop: '10px',
+                padding: '8px 16px',
+                backgroundColor: '#007bff',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
+              Reset Filters
+            </button>
           </div>
           <div className="filter">
             <div className="job-category">
