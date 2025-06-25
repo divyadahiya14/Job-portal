@@ -28,9 +28,6 @@ Job Category Filter
 
 
 
-Discussion Chamber
-
-![Screenshot 2023-01-28 at 8 52 19 PM](https://user-images.githubusercontent.com/114575434/215274887-06fa1c2e-79b1-47f0-b0ee-bdb34d6f1281.png)
 
 
 
